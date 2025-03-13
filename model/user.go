@@ -12,6 +12,8 @@ type User struct {
 	Email    string `json:"email"`
 	TotalRecords int `json:"total_records"`
 	ReminderInterval int `json:"reminder_interval"`
+
+	Achievements []Achievement `gorm:"many2many:user_achievements;" json:"achievements"`
 }
 
 
