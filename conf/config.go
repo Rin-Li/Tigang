@@ -2,6 +2,7 @@ package conf
 
 import (
 	"Tigang/model"
+	"context"
 	"fmt"
 
 	"github.com/spf13/viper"
@@ -27,7 +28,7 @@ var appConfig AppConfig
 var mysqlConfig MySQLConfig
 var db *gorm.DB
 
-func InitConifg(){
+func InitConfig(){
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("./conf")
@@ -70,7 +71,12 @@ func InitMySQL(cfg MySQLConfig){
 
 }
 
+func GetDB(ctx context.Context) *gorm.DB{
+	DB := db
+	return DB.WithContext(ctx)
+}
+
 func Init(){
-	InitConifg()
+	InitConfig()
 	InitMySQL(mysqlConfig)
 }
