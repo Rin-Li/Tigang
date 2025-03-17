@@ -59,3 +59,47 @@ func (service *UserService) Register (ctx context.Context) serializer.Response{
 	}
 
 }
+
+func (service *UserService) Login(ctx context.Context) serializer.Response {
+    var user *model.User
+    userDao := dao.NewUserDao(ctx)
+    user, exist_email, err := userDao.ExistOrNotByUserEmail(service.Email)
+
+    if err != nil {
+        return serializer.Response{
+            Status: 404,
+            Msg: "database error",
+            Error: err.Error(),
+        }
+    }
+
+    if !exist_email {
+        user, exist_user, err := userDao.ExistOrNotByUserName(service.UserName)
+        if err != nil {
+            return serializer.Response{
+                Status: 404,
+                Msg: "database error",
+                Error: err.Error(),
+            }
+        }
+        if !exist_user {
+            return serializer.Response{
+                Status: 404,
+                Msg: "user not exist",
+            }
+        }
+    }
+
+    if user.PasswordDig != service.Password {
+        return serializer.Response{
+            Status: 404,
+            Msg: "password error",
+        }
+    }
+
+    return serializer.Response{
+        Status: 200,
+        Msg: "login success",
+        Data: serializer.BuildUser(*user),
+    }
+}
