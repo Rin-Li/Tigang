@@ -9,3 +9,15 @@ mysql:
   DbUser: root
   DbPassword: ""
   DbName: Tigang
+
+redis:
+  RedisDb: redis
+  RedisAddr: 127.0.0.1:6379
+  RedisPw: 
+  RedisDbName: 0
+
+email:
+  SmtpPort: 465
+  SmtpHost: smtp.qq.com
+  SmtpEmail: 2627630227@qq.com
+  SmtpPass: qivczqaoxgrrdiai

@@ -1,6 +1,6 @@
 package serializer
 
-import "Tigang/model"
+import "Tigang/repository/db/model"
 
 type User struct {
 	ID uint `json:"id"`

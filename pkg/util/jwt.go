@@ -7,13 +7,13 @@ import (
 )
 
 type Claims struct {
-	UserID string `json:"user_id"`
+	UserID uint `json:"user_id"`
 	jwt.RegisteredClaims
 }
 
 var secret = []byte("secret-tigang")
 
-func GenerateToken(UserID string)(string, error){
+func GenerateToken(UserID uint)(string, error){
 	claims := Claims{
 		UserID: UserID,
 		RegisteredClaims: jwt.RegisteredClaims{

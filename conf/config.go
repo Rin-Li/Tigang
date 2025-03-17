@@ -1,7 +1,7 @@
 package conf
 
 import (
-	"Tigang/model"
+	"Tigang/repository/db/model"
 	"context"
 	"fmt"
 
@@ -24,8 +24,24 @@ type MySQLConfig struct {
 	DbName string
 }
 
+type RedisConfig struct {
+	RedisDb     string
+	RedisAddr   string
+	RedisPw     string
+	RedisDbName int
+}
+
+type EmailConfig struct {
+	SmtpPort int
+	SmtpHost string
+	SmtpEmail string
+	SmtpPass string
+}
+
 var appConfig AppConfig
 var mysqlConfig MySQLConfig
+var redisConfig RedisConfig
+var emailConfig EmailConfig
 var db *gorm.DB
 
 func InitConfig(){
@@ -39,6 +55,8 @@ func InitConfig(){
 
 	viper.Sub("service").Unmarshal(&appConfig)
 	viper.Sub("mysql").Unmarshal(&mysqlConfig)
+	viper.Sub("redis").Unmarshal(&redisConfig)
+	viper.Sub("email").Unmarshal(&emailConfig)
 }
 
 func InitMySQL(cfg MySQLConfig){
@@ -70,6 +88,15 @@ func InitMySQL(cfg MySQLConfig){
 	fmt.Println("Database connected")
 
 }
+
+func InitRedis() RedisConfig{
+	return redisConfig
+}
+
+func InitEmail() EmailConfig{
+	return emailConfig
+}
+
 
 func GetDB(ctx context.Context) *gorm.DB{
 	DB := db
