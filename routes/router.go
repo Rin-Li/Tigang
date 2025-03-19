@@ -2,6 +2,7 @@ package routes
 
 import (
 	"Tigang/api"
+	"Tigang/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,6 +19,14 @@ func NewRouter() *gin.Engine {
 		v1.POST("/token", api.UserLogin)
 		v1.POST("/users/reset_password_verify", api.ResetPasswordVerify)
 		v1.PUT("/users/reset_password", api.ResetPassword)
+		//Token
+		auth := v1.Group("/")
+		auth.Use(middleware.JWT())
+		{
+			auth.PUT("users/:id", api.UpdateUser)
+			auth.GET("users/:id", api.GetUser)
+		}
+
 	}
 
 	return r

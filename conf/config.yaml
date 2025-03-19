@@ -1,6 +1,6 @@
 service:
   AppMoodel: debug
-  HttpPort: ":3000"
+  HttpPort: ":3010"
 
 mysql:
   Db: mysql

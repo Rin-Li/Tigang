@@ -8,6 +8,7 @@ import (
 	"Tigang/serializer"
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -25,6 +26,13 @@ type UserRestPasswordService struct {
 	Email string `json:"email" form:"email"`
 	Code string `json:"code" form:"code"`
 	Password string `json:"password" form:"password"`
+}
+
+type UserUpdateService struct {
+	UserName string `json:"username" form:"username"`
+	Password string `json:"password" form:"password"`
+	Email string `json:"email" form:"email"`
+
 }
 //Register
 func (service *UserService) Register (ctx context.Context) serializer.Response{
@@ -48,7 +56,6 @@ func (service *UserService) Register (ctx context.Context) serializer.Response{
 			Msg:"user already registered",
 		}
 	}
-
 	user = model.User{
 		Username: service.UserName,
 		PasswordDig: service.Password,
@@ -194,6 +201,77 @@ func (service *UserRestPasswordService) RestPassword(ctx context.Context) serial
 	return serializer.Response{
 		Status: 200,
 		Msg: "update password success",
+	}
+}
+
+func (service *UserUpdateService) Update(ctx context.Context, id string) serializer.Response{
+	idInt, _ := strconv.Atoi(id)
+	userDao := dao.NewUserDao(ctx)
+	user, exist, err := userDao.ExistOrNotByUserId(uint(idInt))
+	if err != nil{
+		return serializer.Response{
+			Status: 404,
+			Msg: "database error",
+			Error: err.Error(),
+		}
+	}
+
+	if !exist{
+		return serializer.Response{
+			Status: 404,
+			Msg: "user not exist",
+		}
+	}
+
+	if service.UserName != ""{
+		user.Username = service.UserName
+	}
+	if service.Password != ""{
+		user.PasswordDig = service.Password
+	}
+	if service.Email != ""{
+		user.Email = service.Email
+	}
+
+	err = userDao.UpdateUserById(user, uint(idInt))
+	
+	if err != nil{
+		return serializer.Response{
+			Status: 404,
+			Msg: "database error",
+			Error: err.Error(),
+		}
+	}
+
+	return serializer.Response{
+		Status: 200,
+		Msg: "update success",
+	}
+
+}
+
+func GetUser(ctx context.Context, id string) serializer.Response{
+	idInt, _ := strconv.Atoi(id)
+	userDao := dao.NewUserDao(ctx)
+	user, exist, err := userDao.ExistOrNotByUserId(uint(idInt))
+	if err != nil{
+		return serializer.Response{
+			Status: 404,
+			Msg: "database error",
+			Error: err.Error(),
+		}
+	}
+
+	if !exist{
+		return serializer.Response{
+			Status: 404,
+			Msg: "user not exist",
+		}
+	}
+
+	return serializer.Response{
+		Status: 200,
+		Data: serializer.BuildUser(*user),
 	}
 }
 

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"Tigang/pkg/util"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,9 @@ import (
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.GetHeader("Authorization")
+
+		token = strings.TrimPrefix(token, "Bearer ")
+
 		if token == "" {
 			c.JSON(401, gin.H{
 				"message": "Unauthorized",

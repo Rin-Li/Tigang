@@ -45,3 +45,19 @@ func ResetPassword(c *gin.Context){
 		c.JSON(200, ResetPassword.RestPassword(c))
 	}
 }
+
+func UpdateUser(c *gin.Context){
+	var UpdateUser service.UserUpdateService
+	if err := c.ShouldBind(&UpdateUser); err != nil{
+		c.JSON(400, gin.H{"msg": err.Error()})
+		return
+	} else {
+		c.JSON(200, UpdateUser.Update(c, c.Param("id")))
+	}
+}
+
+func GetUser(c *gin.Context) {
+	id := c.Param("id")
+	result := service.GetUser(c, id)
+	c.JSON(result.Status, result)
+}
