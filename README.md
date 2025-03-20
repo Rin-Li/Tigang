@@ -8,6 +8,6 @@ This is a "reminder to tighten the pelvic floor" application under development.
 
 ## Progress
 - Backend:
-   - Completed registration, password reset via email, and JWT login protection.
+   - Completed registration, password reset via email, get user information, update user information and JWT login protection.
 - Frontend:
   - Will start after complete backend, basically will use React
