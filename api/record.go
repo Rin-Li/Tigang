@@ -1,10 +1,20 @@
 package api
 
-import "github.com/gin-gonic/gin"
+import (
+	"Tigang/service"
+
+	"github.com/gin-gonic/gin"
+)
 
 
-func UpdateRecord(c *gin.Context){
+func IncreaseRecord(c *gin.Context){
 	id := c.Param("id")
-	result := service.UpdateRecord(c, id)
+	result := service.IncreaseRecord(c, id)
+	c.JSON(200, result)
+}
+
+func ShowListRecord(c *gin.Context){
+	id := c.Param("id")
+	result := service.ShowListRecord(c, id)
 	c.JSON(200, result)
 }

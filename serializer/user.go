@@ -1,12 +1,17 @@
 package serializer
 
-import "Tigang/repository/db/model"
+import (
+	"Tigang/repository/db/model"
+	"time"
+)
 
 type User struct {
 	ID uint `json:"id"`
 	Username string `json:"username"`
-	Record int `json:"record"`
-	ReminderInterval int `json:"reminder_interval"`
+	Record uint `json:"record"`
+	LastRecordTime time.Time `json:"last_record_time"`
+	ContinueRecordsDay uint `json:"continue_records_day"`
+	ReminderInterval uint `json:"reminder_interval"`
 }
 
 func BuildUser(user model.User) *User {
@@ -15,5 +20,7 @@ func BuildUser(user model.User) *User {
 		Username: user.Username,
 		Record: user.TotalRecords,
 		ReminderInterval: user.ReminderInterval,
+		LastRecordTime: user.LastRecordTime,
+		ContinueRecordsDay: user.ContinueRecordsDay,
 	}
 }

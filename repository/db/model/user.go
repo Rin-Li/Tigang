@@ -1,6 +1,7 @@
 package model
 
 import (
+	"time"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -10,8 +11,10 @@ type User struct {
 	Username string `json:"username"`
 	PasswordDig string `json:"password"`
 	Email    string `json:"email"`
-	TotalRecords int `json:"total_records"`
-	ReminderInterval int `json:"reminder_interval"`
+	TotalRecords uint `json:"total_records"`
+	LastRecordTime time.Time `json:"last_record_time"`
+	ContinueRecordsDay uint `json:"continue_records_day"`
+	ReminderInterval uint `json:"reminder_interval"`
 
 	Achievements []Achievement `gorm:"many2many:user_achievements;" json:"achievements"`
 }

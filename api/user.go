@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserRegister(c *gin.Context){
+func UserRegister(c *gin.Context) {
 	var UserRegister service.UserService
-	if err := c.ShouldBind(&UserRegister); err != nil{
+	if err := c.ShouldBind(&UserRegister); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
 		return
 	} else {
@@ -16,9 +16,9 @@ func UserRegister(c *gin.Context){
 	}
 }
 
-func UserLogin(c *gin.Context){
+func UserLogin(c *gin.Context) {
 	var UserLogin service.UserService
-	if err := c.ShouldBind(&UserLogin); err != nil{
+	if err := c.ShouldBind(&UserLogin); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
 		return
 	} else {
@@ -26,9 +26,9 @@ func UserLogin(c *gin.Context){
 	}
 }
 
-func ResetPasswordVerify(c *gin.Context){
+func ResetPasswordVerify(c *gin.Context) {
 	var ResetPasswordVerify service.UserRestPasswordVerifyService
-	if err := c.ShouldBind(&ResetPasswordVerify); err != nil{
+	if err := c.ShouldBind(&ResetPasswordVerify); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
 		return
 	} else {
@@ -36,9 +36,9 @@ func ResetPasswordVerify(c *gin.Context){
 	}
 }
 
-func ResetPassword(c *gin.Context){
+func ResetPassword(c *gin.Context) {
 	var ResetPassword service.UserRestPasswordService
-	if err := c.ShouldBind(&ResetPassword); err != nil{
+	if err := c.ShouldBind(&ResetPassword); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
 		return
 	} else {
@@ -46,18 +46,18 @@ func ResetPassword(c *gin.Context){
 	}
 }
 
-func UpdateUser(c *gin.Context){
-	var UpdateUser service.UserUpdateService
-	if err := c.ShouldBind(&UpdateUser); err != nil{
+func UserUpdate(c *gin.Context) {
+	var UserUpdate service.UserUpdateService
+	if err := c.ShouldBind(&UserUpdate); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
 		return
 	} else {
-		c.JSON(200, UpdateUser.Update(c, c.Param("id")))
+		c.JSON(200, UserUpdate.Update(c, c.Param("id")))
 	}
 }
 
-func GetUser(c *gin.Context) {
+func ShowUser(c *gin.Context) {
 	id := c.Param("id")
-	result := service.GetUser(c, id)
+	result := service.ShowUser(c, id)
 	c.JSON(result.Status, result)
 }

@@ -1,19 +1,27 @@
 package serializer
 
-import "time"
+import (
+	"Tigang/repository/db/model"
+	"time"
+)
 
 type Record struct {
 	ID uint `json:"id"`
-	UserID uint `json:"user_id"`
 	Time time.Time `json:"time"`
 	TotalRecords uint `json:"total_records"`
 }
 
-func BuildRecord(record Record, totalRecords uint) Record{
+func BuildRecord(record model.Record) Record{
 	return Record{
 		ID: record.ID,
-		UserID: record.UserID,
 		Time: record.Time,
-		TotalRecords: totalRecords,
 	}
+}
+
+func BuildListRecords(records []model.Record) []Record{
+	var recordList []Record
+	for _, record := range records{
+		recordList = append(recordList, BuildRecord(record))
+	}
+	return recordList
 }

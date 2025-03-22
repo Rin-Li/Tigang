@@ -7,7 +7,6 @@ import (
 
 type Record struct {
 	gorm.Model
-	UserID uint `json:"user_id"`
+	UserId uint `json:"user_id"`
 	Time time.Time `json:"time"`
-	Note string `json:"note,omitempty"`
 }

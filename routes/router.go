@@ -11,7 +11,7 @@ func NewRouter() *gin.Engine {
 	r := gin.Default()
 	v1 := r.Group("api")
 	{
-		v1.GET("ping", func(c *gin.Context){
+		v1.GET("ping", func(c *gin.Context) {
 			c.JSON(200, "success")
 		})
 
@@ -22,14 +22,14 @@ func NewRouter() *gin.Engine {
 		//Token
 		auth := v1.Group("/")
 		auth.Use(middleware.JWT())
-		{   
+		{
 			//User
-			auth.PUT("users/:id", api.UpdateUser)
-			auth.GET("users/:id", api.GetUser)
+			auth.PUT("users/:id", api.UserUpdate)
+			auth.GET("users/:id", api.ShowUser)
 
 			//Record
-			auth.PUT("records/:id", api.UpdateRecord)
-			auth.GET("records/:id", api.GetRecord)
+			auth.PUT("records/:id", api.IncreaseRecord)
+			auth.GET("records/:id", api.ShowListRecord)
 
 		}
 
