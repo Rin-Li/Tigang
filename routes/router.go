@@ -17,7 +17,7 @@ func NewRouter() *gin.Engine {
 
 		v1.POST("/users", api.UserRegister)
 		v1.POST("/token", api.UserLogin)
-		v1.POST("/users/password", api.ResetPasswordVerify)
+		v1.POST("/users/verify", api.ResetPasswordVerify)
 		v1.PUT("/users/password", api.ResetPassword)
 		//Token
 		auth := v1.Group("/")
